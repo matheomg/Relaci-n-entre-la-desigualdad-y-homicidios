@@ -1,0 +1,107 @@
+# =============================================================================
+# Relación entre la desigualdad y homicidios en Ecuador 
+# durante el período 2014 -2024
+# Autor: Alan Matheo Morales Gualotuña
+# =============================================================================
+
+# Paquetes -----------------------------------------------------------------
+  library(readxl)
+  library(dplyr)
+  library(plm)
+  library(lmtest)
+  library(sandwich)
+  library(modelsummary)
+
+# Carga de datos -----------------------------------------------------------
+base_dir <- "C:/Users/Matheo/OneDrive/Econom\u00eda del Desarrollo/Econometr\u00eda/Paper"
+ruta     <- file.path(base_dir, "data/base final.xlsx")
+df       <- read_excel(ruta)
+
+df <- df %>% rename(tasa_hom = Tasa_de_homicidios)
+
+# Dummy cantones fronterizos --------------------------------------------
+cantones_frontera <- c(
+  # Colombia
+  "0401", "0406",                          # Carchi
+  "0802", "0805",                          # Esmeraldas
+  "2101", "2102", "2103", "2106", "2107",  # Sucumbíos
+  # Perú
+  "0707", "0714",                          # El Oro
+  "1106", "1108", "1113", "1114",          # Loja
+  "1902", "1903", "1907", "1908", "1909",  # Zamora Chinchipe
+  "1409", "1412",                          # Morona Santiago
+  "1601", "1604",                          # Pastaza
+  "2202"                                   # Orellana
+)
+
+df <- df %>%
+  mutate(frontera = if_else(canton_id %in% cantones_frontera, 1L, 0L))
+
+# Dummy Post-2020 e Interacción --------------------------------------------
+df <- df %>%
+  mutate(
+    post2020     = if_else(anio >= 2021, 1L, 0L),
+    gini_x_post  = gini * post2020
+  )
+
+df %>%
+  group_by(periodo = if_else(post2020 == 1, "2021-2024", "2014-2020")) %>%
+  summarise(
+    media    = round(mean(tasa_hom), 2),
+    mediana  = round(median(tasa_hom), 2),
+    max      = round(max(tasa_hom), 2),
+    .groups  = "drop"
+  ) %>%
+  print()
+
+df %>%
+  group_by(tipo = if_else(frontera == 1, "Fronterizo", "No fronterizo")) %>%
+  summarise(
+    media   = round(mean(tasa_hom), 2),
+    mediana = round(median(tasa_hom), 2),
+    max     = round(max(tasa_hom), 2),
+    .groups = "drop"
+  ) %>%
+  print()
+
+# Definición del panel -----------------------------------------------------
+panel <- pdata.frame(df, index = c("canton_id", "anio"), drop.index = FALSE)
+print(pdim(panel))
+
+# Modelos ----------------------------------------------------
+# Fórmulas
+formula_base <- tasa_hom ~ gini + empleo_adecuado + escolaridad + subempleo +
+  frontera + post2020 + gini_x_post
+
+formula_fe   <- tasa_hom ~ gini + empleo_adecuado + escolaridad + subempleo +
+  post2020 + gini_x_post
+
+# Pooled OLS --------------------------------------------------------------
+m_ols <- plm(formula_base, data = panel, model = "pooling")
+summary(m_ols)
+
+# Efectos fijos solo cantón -----------------------------------------------
+m_fe1 <- plm(formula_fe, data = panel, model = "within", effect = "individual")
+summary(m_fe1)
+
+# Efectos fijos bidireccionales -------------------------------------------
+formula_fe2 <- tasa_hom ~ gini + empleo_adecuado + escolaridad + subempleo + gini_x_post
+summary(formula_fe2)
+m_fe2 <- plm(formula_fe2, data = panel, model = "within", effect = "twoways")
+summary(m_fe2)
+
+# Efectos aleatorios ------------------------------------------------------
+m_re  <- plm(formula_base, data = panel, model = "random", effect = "individual")
+summary(m_re)
+
+# Errores estándar robustos -----------------------------------------------
+se_ols  <- sqrt(diag(vcovHC(m_ols,  type = "HC1", cluster = "group")))
+se_fe1  <- sqrt(diag(vcovHC(m_fe1,  type = "HC1", cluster = "group")))
+se_fe2  <- sqrt(diag(vcovHC(m_fe2,  type = "HC1", cluster = "group")))
+se_re   <- sqrt(diag(vcovHC(m_re,   type = "HC1", cluster = "group")))
+
+# Pruebas de selección ----------------------------------------------------
+test_f       <- pFtest(m_fe1, m_ols)
+test_bp      <- plmtest(m_ols, type = "bp")
+test_hausman <- phtest(m_fe1, m_re)
+test_f2      <- pFtest(m_fe2, m_fe1)

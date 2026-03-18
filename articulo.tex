@@ -1,0 +1,343 @@
+% !TeX program = xelatex
+
+\documentclass[12pt,a4paper]{article}
+
+% -------------------------
+% Idioma y fuente
+% -------------------------
+\usepackage[spanish,es-nodecimaldot]{babel}
+\usepackage{fontspec}
+\setmainfont{Times New Roman}
+
+% -------------------------
+% Página y formato general
+% -------------------------
+\usepackage{geometry}
+\geometry{
+  top=2.5cm,
+  bottom=2.5cm,
+  left=2.5cm,
+  right=2.5cm
+}
+
+\usepackage{setspace}
+\onehalfspacing
+
+\usepackage{ragged2e}
+\AtBeginDocument{\RaggedRight}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt}
+
+% -------------------------
+% Paquetes útiles
+% -------------------------
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage{enumitem}
+
+\hypersetup{
+  hidelinks
+}
+
+% -------------------------
+% Numeración de páginas
+% -------------------------
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot[R]{\thepage}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% -------------------------
+% Títulos
+% -------------------------
+\titleformat{name=\section,numberless}
+  {\bfseries\normalsize}
+  {}
+  {0pt}
+  {}
+
+\titleformat{name=\subsection,numberless}
+  {\bfseries\normalsize}
+  {}
+  {0pt}
+  {}
+
+\titlespacing*{\section}{0pt}{6pt}{6pt}
+\titlespacing*{\subsection}{0pt}{6pt}{6pt}
+
+% -------------------------
+% Tablas y figuras
+% -------------------------
+\captionsetup{
+  font=normalsize,
+  labelfont=bf,
+  textfont=bf,
+  labelsep=period,
+  justification=raggedright,
+  singlelinecheck=false
+}
+
+\newcommand{\Fuente}[1]{%
+  \par{\fontsize{11}{13}\selectfont\textit{Fuente:} #1\par}
+}
+
+\newcommand{\NotaTabla}[1]{%
+  \par{\fontsize{11}{13}\selectfont\textit{Nota:} #1\par}
+}
+
+% -------------------------
+% Cita larga
+% -------------------------
+\newenvironment{citalarga}
+  {\begin{list}{}%
+    {\setlength{\leftmargin}{1.25cm}%
+     \setlength{\rightmargin}{0pt}%
+     \setlength{\topsep}{0pt}%
+     \setlength{\partopsep}{0pt}%
+     \setlength{\parsep}{0pt}%
+     \setlength{\itemsep}{0pt}}%
+   \item\fontsize{11}{16.5}\selectfont}
+  {\end{list}}
+
+% -------------------------
+% Referencias con sangría francesa
+% -------------------------
+\newcommand{\refitem}[1]{%
+  \noindent\hangindent=1.25cm\hangafter=1 #1\par
+}
+
+% -------------------------
+% Documento
+% -------------------------
+\begin{document}
+\begin{center}
+\textbf{Relación entre la desigualdad y homicidios en Ecuador durante el período 2014-2024}
+
+Alan Matheo Morales Gualotuña
+\end{center}
+
+\vspace{0.5cm}
+
+\section*{Introducción}
+
+Entre 2020 y 2023, Ecuador registró cifras históricas en el aumento de la violencia. La tasa nacional de homicidios pasó de 6,3 por cada 100 000 habitantes en 2020 a 42,2 en 2023. Este aumento, en apenas tres años, ubicó al país como uno de los más violentos de América Latina (UNODC 2023). Sin embargo, el promedio nacional deja de lado la heterogeneidad cantonal. Si bien existieron cantones con reportes de homicidios superiores a 200 por cada 100 000 habitantes, el 35 \% de los cantones no registró ningún homicidio en al menos un año del período analizado. Analizar qué factores inciden en la dispersión territorial es una pregunta que tiene implicaciones directas para el diseño de políticas públicas de seguridad.
+
+En la literatura económica se identifica a la desigualdad de ingresos como uno de los principales determinantes que explica el aumento de la violencia. Desde el modelo de Becker (1968), que plantea que la brecha de ingresos genera incentivos para el aumento de actividades delictivas frente al costo de oportunidad del trabajo legal, hasta la evidencia de Fajnzylber, Lederman y Loayza (2002), quienes demostraron, mediante un panel de 39 países, el efecto positivo y estadísticamente significativo del coeficiente de Gini sobre la tasa de homicidios. El estudio de Soares y Naritomi (2010) analiza el contexto latinoamericano y concluye que la combinación de alta desigualdad, débil estado de derecho y mercados laborales precarios explica el aumento de homicidios.
+
+Investigaciones más recientes, como la de Enamorado et al. (2016), indican que la relación entre la desigualdad y los homicidios puede cambiar por la presencia del crimen organizado. Los autores analizan los municipios mexicanos durante la guerra con el narcotráfico; los resultados dan evidencia de que, en territorios con presencia de organizaciones criminales, la desigualdad pierde poder explicativo frente a variables vinculadas a las redes del narcotráfico. En esta misma línea, Dell (2015) indica que la violencia del narcotráfico se concentra en puntos estratégicos como puertos y zonas fronterizas y que la violencia producto de la presencia de carteles no responde a desigualdades locales, sino a dinámicas propias del crimen organizado.
+
+Los resultados muestran que, en el período 2014-2024, la desigualdad y la tasa de homicidios tienen una relación positiva y significativa. Sin embargo, la interacción \(Gini \times Post\text{-}2020\) es negativa y significativa; durante el aumento de la violencia en Ecuador, los cantones con mayor desigualdad no fueron los más afectados.
+
+El artículo se compone de la siguiente estructura. La siguiente sección describe los datos, presenta la estadística descriptiva y expone el modelo econométrico. Luego se presentan los resultados. Finalmente, se discuten los hallazgos y se exponen las limitaciones del análisis.
+
+\section*{Metodología}
+
+\subsection*{Variable dependiente}
+
+La fuente de datos para la construcción de la variable dependiente provino de las Estadísticas de Defunciones Generales (EDG) publicadas por el Instituto Nacional de Estadística y Censos (INEC). Cada observación proporciona información sobre la causa de muerte, la clasificación de violencia y la ubicación geográfica del fallecido. Se aplicaron dos criterios para la identificación de homicidios: la Clasificación Internacional de Enfermedades (CIE-10) y la categoría de muerte violenta. El total de homicidios desde 2014 hasta 2024 fue de 28 577.
+
+Para la ubicación geográfica del homicidio se tomó como referencia el cantón de fallecimiento. La base de datos de esta variable es un panel balanceado de 2431 observaciones (221 cantones x 11 años). Para los años donde no existía información, los valores fueron reemplazados por cero, ya que EDG corresponde a un reporte a nivel nacional. El 35,3 \% de las observaciones del panel presentan cero homicidios.
+
+\subsection*{Variable independiente y controles}
+
+La fuente de datos para la construcción del coeficiente de Gini por cantón fue la Encuesta Nacional de Empleo, Desempleo y Subempleo (ENEMDU). Debido a que en la encuesta no se reporta información de manera continua para todos los cantones, en especial para los más pequeños, se construyó la serie de forma continua para cada año mediante la utilización de algoritmos, técnicas de armonización y controles por tamaño de cantón. Las variables de control también provienen de la ENEMDU y se aplicó un procesamiento similar para la obtención de información anual. Se incluyó una variable dicotómica para identificar los cantones fronterizos y otra variable de interacción \(Gini \times Post\text{-}2020\).
+
+\begin{table}[H]
+\caption{Estadística descriptiva}
+{\fontsize{11}{13}\selectfont
+\begin{tabularx}{\textwidth}{>{\RaggedRight\arraybackslash}X
+                                >{\centering\arraybackslash}p{1.5cm}
+                                >{\centering\arraybackslash}p{1.5cm}
+                                >{\centering\arraybackslash}p{1.5cm}
+                                >{\centering\arraybackslash}p{1.5cm}
+                                >{\centering\arraybackslash}p{1.8cm}
+                                >{\centering\arraybackslash}p{1.5cm}
+                                >{\centering\arraybackslash}p{1.7cm}}
+\toprule
+Variable & Media & D.E. & Mín. & P25 & Mediana & P75 & Máx. \\
+\midrule
+Tasa de homicidios (x 100 000 habitantes) & 10,39 & 19,42 & 0,00 & 0,00 & 4,35 & 11,35 & 226,91 \\
+Coeficiente de Gini & 0,443 & 0,055 & 0,281 & 0,406 & 0,436 & 0,477 & 0,639 \\
+Empleo adecuado & 0,312 & 0,112 & 0,055 & 0,231 & 0,303 & 0,380 & 0,822 \\
+Escolaridad & 9,18 & 1,21 & 3,94 & 8,41 & 9,21 & 9,94 & 14,50 \\
+Subempleo & 0,197 & 0,062 & 0,032 & 0,150 & 0,197 & 0,241 & 0,502 \\
+\bottomrule
+\end{tabularx}
+}
+\Fuente{Elaborado por el autor con base en EDG e INEC (2014-2024) y ENEMDU (2014-2024).}
+\NotaTabla{2431 observaciones, período 2014-2024. Panel balanceado. El 35,3 \% de las observaciones tienen cero en la tasa de homicidios y el 11,3 \% de los cantones son fronterizos.}
+\end{table}
+
+La tasa de homicidios corresponde a la relación entre el número de homicidios obtenidos en la EDG y la población, por cada 100 000 habitantes. El denominador se obtuvo de las proyecciones oficiales publicadas por el INEC. La distribución es fuertemente asimétrica hacia la derecha, con una mediana de 4,35 y una media de 10,39. El valor máximo de 226,9 evidencia la concentración de la violencia en pocos cantones durante el período de análisis.
+
+El coeficiente de Gini presenta, en el período 2014-2024, una variación entre 0,28 y 0,64. Este rango ubica a los cantones de Ecuador en niveles de desigualdad moderada-alta según el contexto latinoamericano.
+
+La media del empleo adecuado es de 31,2 \%, con una alta dispersión entre los cantones urbanos (hasta 82,2 \%) y rurales (desde 5,5 \%), mientras que la media de subempleo se ubica en 19,7 \%. La media de escolaridad de 9,18 años es equivalente a educación secundaria incompleta. El rango va de 3,9 a 14,5 años.
+
+Con respecto a las variables dicotómicas, se identificaron 25 cantones fronterizos de 221 (11,3 \%). Estas fronteras se ubican en:
+
+\begin{table}[H]
+\caption{Cantones fronterizos}
+{\fontsize{11}{13}\selectfont
+\begin{tabularx}{\textwidth}{>{\RaggedRight\arraybackslash}p{2.5cm} X}
+\toprule
+Frontera & Cantones \\
+\midrule
+Colombia & Tulcán, San Pedro de Huaca, Eloy Alfaro, San Lorenzo, Lago Agrio, Gonzalo Pizarro, Putumayo, Cascales y Cuyabeno \\
+Perú & Huaquillas, Las Lajas, Espíndola, Macará, Zapotillo, Pindal, Taisha, Tiwintza, Pastaza, Arajuno, Chinchipe, Nangaritza, Centinela del Cóndor, Palanda, Paquisha y Aguarico \\
+\bottomrule
+\end{tabularx}
+}
+\Fuente{Elaborado por el autor.}
+\end{table}
+
+La variable \(Post\text{-}2020\) toma valor de 0 para los años 2014-2020 y 1 para 2021-2024, capturando el quiebre estructural en los niveles de violencia asociado al auge del crimen organizado. El 36,4 \% de las observaciones corresponde al período posterior.
+
+\subsection*{Modelo econométrico}
+
+Se construye un modelo de datos de panel con información de los 221 cantones de Ecuador para el período 2014-2024, con un total de 2431 observaciones. La especificación del modelo es:
+
+\begin{equation}
+Homicidios_{it} = \alpha + \beta_1 Gini_{it} + \beta_2 (Gini_{it} \times Post2020_t) + \beta_3 X_{it} + \gamma_i + \lambda_t + \epsilon_{it}
+\end{equation}
+
+donde \(i\) representa al cantón en el año \(t\). La variable dependiente \(Homicidios_{it}\) es la tasa de homicidios por 100 000 habitantes. La variable \(Gini_{it}\) corresponde al coeficiente de Gini a nivel cantonal, \(Post2020_t\) es una variable dicotómica con valores de 1 para el período 2021-2024, la interacción \(Gini_{it} \times Post2020_t\) captura si el efecto de la desigualdad sobre la violencia cambió con el quiebre estructural posterior a 2020, \(X_{it}\) corresponde al vector de variables de control (empleo adecuado, escolaridad y subempleo), \(\gamma_i\) son los efectos fijos cantonales, \(\lambda_t\) los efectos fijos temporales y \(\epsilon_{it}\) es el término del error.
+
+Se estimaron tres modelos de datos de panel y se aplicaron pruebas de selección:
+
+\begin{itemize}[leftmargin=1.25cm]
+\item \textbf{Pooled OLS:} este modelo ignora la heterogeneidad no observada entre los cantones. Los coeficientes de este modelo son inconsistentes cuando los efectos individuales se correlacionan con los regresores.
+
+\item \textbf{Efectos fijos (EF) por cantón:} controla características geográficas, históricas e institucionales no observadas y constantes en el tiempo. Este modelo identifica el efecto de la desigualdad a partir de cambios dentro de cada cantón a lo largo del tiempo.
+
+\item \textbf{Efectos fijos bidireccionales (EF bidir.):} este modelo incorpora además los efectos temporales \(\lambda_t\) para controlar las variaciones comunes a todos los cantones en cada año. Este modelo es el más consistente, ya que captura el efecto posterior a 2021.
+\end{itemize}
+
+\begin{table}[H]
+\caption{Resultados de las pruebas de selección}
+{\fontsize{11}{13}\selectfont
+\begin{tabularx}{\textwidth}{>{\RaggedRight\arraybackslash}X >{\centering\arraybackslash}p{3.2cm} >{\centering\arraybackslash}p{2.3cm}}
+\toprule
+Prueba & Estadístico & p-valor \\
+\midrule
+F (EF vs Pooled OLS) & \(F = 3,97\) & \(<0,001\) \\
+Breusch-Pagan (EA vs OLS) & \(\chi^2 = 450,87\) & \(<0,001\) \\
+Hausman (EF vs EA) & \(\chi^2 = 12,73\) & 0,047 \\
+F bidireccional (año + cantón) & \(F = 23,53\) & \(<0,001\) \\
+\bottomrule
+\end{tabularx}
+}
+\Fuente{Elaborado por el autor.}
+\end{table}
+
+El test F rechaza el modelo pooled OLS (\(F = 3,97\)), el test de Hausman rechaza los efectos aleatorios (\(\chi^2 = 12,73\)) y el test F bidireccional comprueba la relevancia de los efectos temporales (\(F = 23,53\)). Por lo tanto, el modelo de efectos bidireccionales es el más adecuado en función de las pruebas realizadas.
+
+\section*{Resultados}
+
+\begin{table}[H]
+\caption{Resultados}
+{\fontsize{11}{13}\selectfont
+\begin{tabularx}{\textwidth}{>{\RaggedRight\arraybackslash}p{4.1cm}
+                                >{\centering\arraybackslash}X
+                                >{\centering\arraybackslash}X
+                                >{\centering\arraybackslash}X
+                                >{\centering\arraybackslash}X}
+\toprule
+ & Pooled OLS & EF Cantón & EF Bidir. & EA \\
+\midrule
+Gini & 11,143 & 21,543* & 31,204* & 12,660 \\
+ & (7,896) & (11,149) & (11,718) & (8,481) \\
+
+Gini x Post-2020 & -124,489*** & -136,035*** & -121,292* & -132,790*** \\
+ & (26,651) & (26,699) & (25,368) & (26,926) \\
+
+Empleo adecuado & 32,575*** & 6,373 & 3,691 & 22,636*** \\
+ & (8,075) & (9,009) & (11,180) & (7,776) \\
+
+Escolaridad & -0,667 & -0,007 & 0,063 & -0,354 \\
+ & (0,755) & (0,857) & (0,997) & (0,687) \\
+
+Subempleo & 48,101*** & -17,327* & -4,470 & 16,365** \\
+ & (8,535) & (11,404) & (11,339) & (8,351) \\
+
+Cantón fronterizo & 5,187** &  &  & 3,876 \\
+ & (2,566) &  &  & (2,514) \\
+
+EF cantón & No & Sí & Sí & No \\
+EF año & No & No & Sí & No \\
+\(R^2\) & 0,192 & 0,202 & 0,045 & 0,193 \\
+\(N\) & 2431 & 2431 & 2431 & 2431 \\
+\bottomrule
+\end{tabularx}
+}
+\NotaTabla{* \(p < 0,1\), ** \(p < 0,05\), *** \(p < 0,01\).}
+\end{table}
+
+En el modelo de efectos bidireccionales, el coeficiente de Gini es positivo y estadísticamente significativo al 1 \%. La interpretación del coeficiente, controlando por la heterogeneidad no observada de cada cantón y por los shocks temporales, señala que un aumento de 0,1 puntos en el coeficiente de Gini se asocia con un incremento de 3,12 homicidios por cada 100 000 habitantes dentro del mismo cantón.
+
+Con respecto a la interacción \(Gini \times Post\text{-}2020\), el coeficiente resultó negativo, de gran magnitud y estadísticamente significativo en los cuatro modelos. En el período 2021-2024, el efecto total de Gini es el resultado de sumar el coeficiente base y la interacción; en este período, los cantones con mayor desigualdad registraron menos homicidios, manteniendo constantes los efectos fijos. En cada una de las especificaciones de los modelos se comprueba la robustez del coeficiente.
+
+Con respecto a las variables de control, estas no resultaron estadísticamente significativas en el modelo de efectos fijos bidireccionales. Este resultado señala que los cambios \textit{within} cantón a lo largo del tiempo tienen escaso poder explicativo una vez que son absorbidos los efectos temporales.
+
+La variable para identificar a los cantones fronterizos resultó positiva y estadísticamente significativa en el modelo pooled OLS. Su interpretación indica que los 25 cantones fronterizos registran, en promedio, 5 homicidios adicionales por cada 100 000 habitantes en comparación con los cantones no fronterizos. Sin embargo, esta variable es absorbida por los efectos fijos cantonales en los demás modelos.
+
+\section*{Discusión}
+
+Los resultados obtenidos permiten distinguir dos períodos en la relación entre la desigualdad y los homicidios en Ecuador. La relación positiva en el período 2014-2020 va en sintonía con la hipótesis clásica del crimen. Fajnzylber, Lederman y Loayza (2002) argumentan que el coeficiente de Gini corresponde a uno de los predictores con mayor robustez para explicar la tasa de homicidios. En el presente estudio, el coeficiente obtenido en el período base replica ese hallazgo, pero a nivel cantonal: los años que presentan mayor desigualdad se asocian con un aumento en la tasa de homicidios. Estos resultados tienen sustento teórico en la teoría de la privación relativa (Merton 1938; Runciman 1966). Esta teoría menciona que el aumento de las brechas entre ricos y pobres provoca incentivos para el aumento de la delincuencia. El modelo económico del crimen de Becker (1968) señala que el retorno esperado de las actividades ilícitas aumenta a medida que se incrementa la desigualdad. En el contexto latinoamericano, Soares y Naritomi (2010) concluyen que la desigualdad, las instituciones débiles y los mercados laborales precarios son causas del aumento de homicidios; este marco teórico describe la situación de Ecuador en el período analizado.
+
+El cambio de signo en los coeficientes para el período posterior a 2021 es un hallazgo relevante en el estudio. La interacción de la variable \(Gini \times Post\text{-}2020\) es negativa y estadísticamente significativa en los cuatro modelos, lo que indica que la relación se invirtió. El trabajo de Enamorado, López-Calva, Rodríguez-Castelán y Winkler (2016) analizó la relación entre desigualdad de ingresos y el aumento de la violencia en los municipios de México en el período 2007-2010. Los autores encontraron que los territorios más afectados por el aumento del crimen organizado presentaban ingresos estables y que el aumento de la delincuencia no respondía a la desigualdad de ingresos, sino a factores propios del narcotráfico, como las disputas de territorio, conflictos entre facciones y control de rutas.
+
+Durante 2021 y 2023, Ecuador sufrió una transformación, ya que pasó de ser un país de tránsito a convertirse en una zona de disputa entre las organizaciones vinculadas con los carteles de México y Colombia, según los reportes publicados por InSight Crime (2023). Para el caso ecuatoriano, la violencia se concentró en zonas estratégicas como puertos y corredores de exportación de droga hacia Europa. Esta dinámica fue independiente del nivel de desigualdad cantonal y respondió a las estrategias del crimen organizado.
+
+\section*{Limitaciones del modelo}
+
+Se identifican tres limitaciones principales. Primero, el coeficiente de Gini es potencialmente endógeno, ya que la violencia afecta el desempeño económico de los cantones y, con ello, la distribución del ingreso. Debido a la falta de una variable instrumental, los coeficientes representan asociaciones y no efectos causales.
+
+Segundo, el 35,3 \% de las observaciones con tasas de homicidios iguales a cero sugiere la utilización de un modelo como el de Poisson con efectos fijos, ya que sería más apropiado que el estimador lineal utilizado en el estudio.
+
+Tercero, el modelo no logra incorporar variables de crimen organizado ni la capacidad institucional de cada cantón, por ejemplo: decomisos de drogas o tasa de esclarecimiento de homicidios. La ausencia de estas variables podría sesgar los coeficientes obtenidos. Adicionalmente, se recomienda estimar el quiebre estructural de forma endógena mediante el test de Bai y Perron (1998).
+
+Por último, mediante pruebas de sensibilidad es muy probable que el coeficiente de Gini esté subestimado. El método de Oster (2019) genera un coeficiente ajustado de 44,4, superior al valor estimado de 31,2 en el modelo.
+
+\section*{Referencias}
+
+\begin{spacing}{1}
+
+\refitem{Bai, Jushan, y Pierre Perron. 1998. “Estimating and Testing Linear Models with Multiple Structural Changes”. \textit{Econometrica} 66 (1): 47-78. \url{https://doi.org/10.2307/2998540}}
+
+\refitem{Becker, Gary S. 1968. “Crime and Punishment: An Economic Approach”. \textit{Journal of Political Economy} 76 (2): 169-217. \url{https://doi.org/10.1086/259394}}
+
+\refitem{Dell, Melissa. 2015. “Trafficking Networks and the Mexican Drug War”. \textit{American Economic Review} 105 (6): 1738-1779. \url{https://doi.org/10.1257/aer.20121637}}
+
+\refitem{Enamorado, Ted, Luis Felipe López-Calva, Carlos Rodríguez-Castelán y Hernán Winkler. 2016. “Income Inequality and Violent Crime: Evidence from Mexico’s Drug War”. \textit{Journal of Development Economics} 120: 128-143. \url{https://doi.org/10.1016/j.jdeveco.2015.12.004}}
+
+\refitem{Fajnzylber, Pablo, Daniel Lederman y Norman Loayza. 2002. “Inequality and Violent Crime”. \textit{Journal of Law and Economics} 45 (1): 1-40. \url{https://doi.org/10.1086/338347}}
+
+\refitem{Instituto Nacional de Estadística y Censos (INEC). 2014-2024. \textit{Estadísticas de Defunciones Generales (EDG)}. Quito: INEC. \url{https://www.ecuadorencifras.gob.ec/estadisticas-de-defunciones-generales/}}
+
+\refitem{Instituto Nacional de Estadística y Censos (INEC). 2014-2024. \textit{Encuesta Nacional de Empleo, Desempleo y Subempleo (ENEMDU)}. Quito: INEC. \url{https://www.ecuadorencifras.gob.ec/enemdu-2024/}}
+
+\refitem{InSight Crime. 2023. \textit{Ecuador: Una guerra entre bandas criminales}. Washington D.C.: InSight Crime. \url{https://insightcrime.org/}}
+
+\refitem{Merton, Robert K. 1938. “Social Structure and Anomie”. \textit{American Sociological Review} 3 (5): 672-682.}
+
+\refitem{Oster, Emily. 2019. “Unobservable Selection and Coefficient Stability: Theory and Evidence”. \textit{Journal of Business \& Economic Statistics} 37 (2): 187-204. \url{https://doi.org/10.1080/07350015.2016.1227711}}
+
+\refitem{Runciman, Walter G. 1966. \textit{Relative Deprivation and Social Justice}. Londres: Routledge \& Kegan Paul.}
+
+\refitem{Soares, Rodrigo R., y Joana Naritomi. 2010. “Understanding High Crime Rates in Latin America: The Role of Social and Policy Factors”. En \textit{The Economics of Crime: Lessons for and from Latin America}, editado por Rafael Di Tella, Sebastian Edwards y Ernesto Schargrodsky, 19-55. Chicago: University of Chicago Press.}
+
+\refitem{United Nations Office on Drugs and Crime (UNODC). 2023. \textit{World Drug Report 2023}. Viena: UNODC. \url{https://www.unodc.org/unodc/en/data-and-analysis/world-drug-report-2023.html}}
+
+\end{spacing}
+
+\end{document}
