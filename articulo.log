@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (MiKTeX 24.1) (preloaded format=xelatex 2026.3.18)  18 MAR 2026 19:30
+This is XeTeX, Version 3.141592653-2.6-0.999995 (MiKTeX 24.1) (preloaded format=xelatex 2026.3.18)  18 MAR 2026 19:46
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -505,8 +505,10 @@ Package: enumitem 2025/02/06 v3.11 Customized lists
 \enit@inbox=\box60
 \enit@count@id=\count312
 \enitdp@description=\count313
+) (articulo.aux
+LaTeX Info: Redefining \. on input line 11.
+LaTeX Info: Redefining \% on input line 11.
 )
-No file articulo.aux.
 \openout1 = `articulo.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 121.
@@ -520,6 +522,7 @@ LaTeX Font Info:    ... okay on input line 121.
 LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 121.
 LaTeX Font Info:    Trying to load font information for TS1+cmr on input line 1
 21.
+
 (C:\Users\Matheo\AppData\Local\Programs\MiKTeX\tex/latex/base\ts1cmr.fd
 File: ts1cmr.fd 2023/04/13 v2.5m Standard LaTeX font definitions
 )
@@ -639,18 +642,17 @@ Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: hyperref package is loaded.
 Package caption Info: End \AtBeginDocument code.
 Package hyperref Info: Link coloring OFF on input line 121.
+(articulo.out) (articulo.out)
 \@outlinefile=\write3
 \openout3 = `articulo.out'.
 
-
-Package hyperref Warning: Rerun to get /PageLabels entry.
-
-LaTeX Font Info:    Trying to load font information for U+msa on input line 132
+LaTeX Font Info:    Trying to load font information for U+msa on input line 134
 .
+
 (C:\Users\Matheo\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 132
+LaTeX Font Info:    Trying to load font information for U+msb on input line 134
 .
 
 (C:\Users\Matheo\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsb.fd
@@ -659,52 +661,101 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 [1
 
 ]
-Overfull \hbox (4.43388pt too wide) in paragraph at lines 178--178
+Overfull \hbox (4.43388pt too wide) in paragraph at lines 180--180
 []|\TU/TimesNewRoman(0)/m/n/11 Coeficiente 
  []
 
 
-Overfull \hbox (5.6585pt too wide) in paragraph at lines 178--178
+Overfull \hbox (5.6585pt too wide) in paragraph at lines 180--180
 []|\TU/TimesNewRoman(0)/m/n/11 Escolaridad|  
  []
 
 
-Overfull \hbox (3.23076pt too wide) in paragraph at lines 178--178
+Overfull \hbox (3.23076pt too wide) in paragraph at lines 180--180
 []|\TU/TimesNewRoman(0)/m/n/11 Subempleo|  
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 178--180
+Underfull \hbox (badness 10000) in paragraph at lines 180--182
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 181--181
+Underfull \hbox (badness 10000) in paragraph at lines 183--183
 []\TU/TimesNewRoman(0)/m/it/11 Nota: \TU/TimesNewRoman(0)/m/n/11 2431 observaci
 ones, período 2014-2024. Panel balanceado. El 35,3$ $% de las observaciones
  []
 
 [2]
-Underfull \hbox (badness 10000) in paragraph at lines 202--202
+Underfull \hbox (badness 10000) in paragraph at lines 204--204
 []|\TU/TimesNewRoman(0)/m/n/11 Tulcán, San Pedro de Huaca, Eloy Alfaro, San Lor
 enzo, Lago Agrio, Gonzalo
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 202--202
+Underfull \hbox (badness 10000) in paragraph at lines 204--204
 []|\TU/TimesNewRoman(0)/m/n/11 Huaquillas, Las Lajas, Espíndola, Macará, Zapoti
 llo, Pindal, Taisha, Tiwin-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 202--202
+Underfull \hbox (badness 10000) in paragraph at lines 204--204
 \TU/TimesNewRoman(0)/m/n/11 tza, Pastaza, Arajuno, Chinchipe, Nangaritza, Centi
 nela del Cóndor, Palanda,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 202--204
+Underfull \hbox (badness 10000) in paragraph at lines 204--206
 
  []
 
-[3
+[3] [4]
+Underfull \hbox (badness 10000) in paragraph at lines 243--245
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 286--288
+
+ []
+
+[5] [6] [7]
+Overfull \hbox (5.30302pt too wide) in paragraph at lines 333--333
+\TU/TimesNewRoman(0)/m/it/12 Desempleo y Subempleo (ENEMDU)\TU/TimesNewRoman(0)
+/m/n/12 . Quito: INEC. []$[][][][][] [] [] [] [][][] [] [][][][][][][][][][][][
+][][][] [] 
+ []
+
+
+Overfull \hbox (76.44926pt too wide) in paragraph at lines 345--345
+\TU/TimesNewRoman(0)/m/n/12 UNODC. []$[][][][][] [] [] [] [][][] [] [][][][][] 
+[] [][][] [] [][][][][] [] [][] [] [][][][][][][][][][][][][][][][][][][] [] []
+[][][][][][][][][][][][][][][][][][][][][][][][] [] 
+ []
+
+[8] (articulo.aux
+LaTeX Info: Redefining \. on input line 11.
+LaTeX Info: Redefining \% on input line 11.
+)
+ ***********
+LaTeX2e <2023-11-01> patch level 1
+L3 programming layer <2024-01-04>
+ ***********
+
+
+LaTeX Font Warning: Size substitutions with differences
+(Font)              up to 0.5pt have occurred.
+
+Package rerunfilecheck Info: File `articulo.out' has not changed.
+(rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
+ ) 
+Here is how much of TeX's memory you used:
+ 15940 strings out of 409617
+ 300879 string characters out of 5773810
+ 1942191 words of memory out of 5000000
+ 37864 multiletter control sequences out of 15000+600000
+ 566085 words of font info for 89 fonts, out of 8000000 for 9000
+ 1348 hyphenation exceptions out of 8191
+ 79i,11n,93p,1303b,471s stack positions out of 10000i,1000n,20000p,200000b,200000s
+
+Output written on articulo.pdf (8 pages).
